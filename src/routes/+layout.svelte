@@ -1,24 +1,27 @@
-<script lang='ts'>
-    import "../app.css";
-    import { invalidate } from '$app/navigation'
-	import { onMount } from 'svelte'
-	import type { LayoutData } from './$types'
+<script lang="ts">
+  import "../app.postcss";
+  import Navbar from "$lib/components/Navbar.svelte";
+  import { invalidate } from "$app/navigation";
+  import { onMount } from "svelte";
+  import type { LayoutData } from "./$types";
 
-	export let data: LayoutData
+  export let data: LayoutData;
 
-	$: ({ supabase, session } = data)
+  $: ({ supabase, session } = data);
 
-	onMount(() => {
-		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
-			if (_session?.expires_at !== session?.expires_at) {
-				invalidate('supabase:auth')
-			}
-		})
+  onMount(() => {
+    const { data } = supabase.auth.onAuthStateChange((event, _session) => {
+      if (_session?.expires_at !== session?.expires_at) {
+        invalidate("supabase:auth");
+      }
+    });
 
-		return () => data.subscription.unsubscribe()
-	})
+    return () => data.subscription.unsubscribe();
+  });
 </script>
 
-<div class="container" style="padding: 50px 0 100px 0">
-	<slot />
+<Navbar />
+
+<div class="h-full w-full m-0 p-0 prose lg:prose-xl">
+  <slot />
 </div>
