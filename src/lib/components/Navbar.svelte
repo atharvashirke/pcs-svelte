@@ -34,7 +34,7 @@
     </Dropdown>
 {:else}
     <div class="flex items-center md:order-2">
-        <Button href="/login">Login</Button>
+        <Button href="/login" color="purple">Login</Button>
     </div>
 {/if}
 <NavUl {hidden}>
